@@ -92,7 +92,7 @@ class AllTopicsScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildButton(context, tCprimg, tCpr,  CprScreen()),
+        _buildButton(context, tCprimg, tCpr, CprScreen()),
         const SizedBox(width: 15.0),
         _buildButton(context, tWoundimg, tBleeding, const Bleeding()),
         const SizedBox(width: 15.0),

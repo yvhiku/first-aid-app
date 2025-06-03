@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/constants/colors.dart';
 import 'package:flutter_application_1/src/constants/image_strings.dart';
 import 'package:flutter_application_1/src/constants/text_strings.dart';
-import 'package:flutter_application_1/src/features/core/controlers/navbar.dart';
+import 'package:flutter_application_1/src/features/core/controllers/navbar.dart';
 import 'package:flutter_application_1/src/features/core/screens/topics/all_topic.dart';
 import 'package:flutter_application_1/src/features/core/screens/topics/bleeding.dart';
 import 'package:flutter_application_1/src/features/core/screens/topics/burns.dart';

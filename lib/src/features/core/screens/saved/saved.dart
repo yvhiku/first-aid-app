@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/features/core/controlers/topic_controller.dart';
+import 'package:flutter_application_1/src/features/core/controllers/topic_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_1/src/constants/colors.dart';
 import 'package:flutter_application_1/src/constants/image_strings.dart';
+import 'package:flutter_application_1/src/features/core/controllers/navbar.dart'; // Make sure to import your navigation controller
 
 class SavedScreen extends StatelessWidget {
   const SavedScreen({super.key});
@@ -10,6 +11,8 @@ class SavedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TopicController topicController = Get.find();
+    final NavigationController navigationController =
+        Get.find(); // Get the navigation controller
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -37,7 +40,11 @@ class SavedScreen extends StatelessWidget {
               Icons.more_vert,
               color: Color.fromARGB(255, 139, 47, 49),
             ),
-            onSelected: (value) {},
+            onSelected: (value) {
+              if (value == 'clear_all') {
+                topicController.savedTopics.clear();
+              }
+            },
             itemBuilder:
                 (context) => [
                   const PopupMenuItem(
@@ -45,44 +52,83 @@ class SavedScreen extends StatelessWidget {
                     child: Text('Settings'),
                   ),
                   const PopupMenuItem(value: 'help', child: Text('Help')),
-                  const PopupMenuItem(value: 'logout', child: Text('Logout')),
+                  const PopupMenuItem(
+                    value: 'clear_all',
+                    child: Text('Clear All'),
+                  ),
                 ],
           ),
         ],
       ),
-      body: Obx(
-        () =>
-            topicController.savedTopics.isEmpty
-                ? const Center(
-                  child: Text(
-                    'No saved topics yet',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                )
-                : ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: topicController.savedTopics.length,
-                  itemBuilder: (context, index) {
-                    final topic = topicController.savedTopics[index];
-                    return Card(
-                      elevation: 2,
-                      margin: const EdgeInsets.only(bottom: 16),
-                      child: ListTile(
-                        leading: Image(
-                          image: AssetImage(topic.image),
-                          width: 40,
-                        ),
-                        title: Text(topic.title),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.bookmark, color: Colors.red),
-                          onPressed: () => topicController.removeTopic(topic),
-                        ),
-                        onTap: () => Get.to(() => topic.screen),
-                      ),
-                    );
-                  },
+      body: Obx(() {
+        if (topicController.savedTopics.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(tNoSavedTopicsImg, height: 150),
+                const SizedBox(height: 20),
+                const Text(
+                  'No saved topics yet',
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
-      ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    // Change the navigation index instead of using Get.to
+                    navigationController.selectedIndex.value =
+                        1; // Assuming 1 is the index for AllTopicsScreen
+                  },
+                  child: const Text(
+                    'Browse Topics',
+                    style: TextStyle(color: tPrimaryColor, fontSize: 16),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        return ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: topicController.savedTopics.length,
+          itemBuilder: (context, index) {
+            final topic = topicController.savedTopics[index];
+            return Card(
+              elevation: 2,
+              margin: const EdgeInsets.only(bottom: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.grey[200],
+                  child: Image(
+                    image: AssetImage(topic['image'] ?? tDefaultTopicImg),
+                    width: 30,
+                  ),
+                ),
+                title: Text(
+                  topic['title'],
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.bookmark, color: Colors.red),
+                  onPressed: () => topicController.removeTopic(topic),
+                ),
+                onTap: () {
+                  if (topic['screen'] != null) {
+                    Get.to(() => topic['screen']);
+                  }
+                },
+              ),
+            );
+          },
+        );
+      }),
     );
   }
 }

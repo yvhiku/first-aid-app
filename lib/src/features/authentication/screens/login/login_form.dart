@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/constants/colors.dart';
 import 'package:flutter_application_1/src/constants/sizes.dart';
 import 'package:flutter_application_1/src/constants/text_strings.dart';
-import 'package:flutter_application_1/src/features/core/controlers/navbar.dart';
+import 'package:flutter_application_1/src/features/core/controllers/navbar.dart';
 import 'package:flutter_application_1/src/features/authentication/screens/forget_password/forget_screen.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';

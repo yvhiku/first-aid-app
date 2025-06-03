@@ -37,3 +37,5 @@ const String tWoundimg = "assets/icons/wound.png";
 const String tBleedingimg = "assets/icons/bleeding.png";
 const String tGps = "assets/icons/location_pin.png";
 const String tAllergicReactionimg = "assets/icons/dust.png";
+const String tNoSavedTopicsImg = "assets/icons/notsaved.png";
+const String tDefaultTopicImg = "assets/icons/notsaved.png";
