@@ -4,24 +4,34 @@ on: [push]
 jobs:
   build:
     runs-on: macos-latest
+    timeout-minutes: 30  # Prevent hanging builds
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: '3.19.0'  # Specify exact version for stability
 
-      - run: flutter pub get
+      - name: Get dependencies
+        run: flutter pub get
 
-      - run: |
+      - name: Setup Yandex MapKit
+        run: |
           echo "YANDEX_MAPKIT_API_KEY=${{ secrets.YANDEX_MAPKIT_API_KEY }}" >> $GITHUB_ENV
-          cd ios && pod install
+          cd ios && pod install --repo-update
 
-      - run: flutter build ios --release --no-codesign
+      - name: Build iOS (release)
+        run: flutter build ios --release --no-codesign
 
-      - uses: actions/upload-artifact@v3
-        if: success()
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4  # Updated to v4
         with:
           name: ios-build
-          path: build/ios/iphoneos/Runner.app
+          path: |
+            build/ios/iphoneos/Runner.app
+            build/ios/iphoneos/Runner.app.dSYM
+          retention-days: 5  # Auto-clean old artifacts
