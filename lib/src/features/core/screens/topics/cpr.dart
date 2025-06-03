@@ -14,6 +14,7 @@ class CprScreen extends StatelessWidget {
       'title': 'CPR Instructions',
       'image': tCprimg, // Make sure this matches your image constant
       'screen': const CprScreen(),
+      'type': 'cpr',
     };
 
     return Scaffold(
@@ -47,7 +48,7 @@ class CprScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(child: Text('content goes here')),
+      body: const Center(child: Text('CPR content goes here')),
     );
   }
 }

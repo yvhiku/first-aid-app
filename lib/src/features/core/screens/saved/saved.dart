@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/features/core/controllers/topic_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_1/src/constants/colors.dart';
 import 'package:flutter_application_1/src/constants/image_strings.dart';
-import 'package:flutter_application_1/src/features/core/controllers/navbar.dart'; // Make sure to import your navigation controller
+import 'package:flutter_application_1/src/features/core/controllers/topic_controller.dart';
+import 'package:flutter_application_1/src/features/core/controllers/navbar.dart';
+import 'package:flutter_application_1/src/features/core/screens/topics/all_topic.dart';
 
 class SavedScreen extends StatelessWidget {
   const SavedScreen({super.key});
@@ -11,9 +12,8 @@ class SavedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TopicController topicController = Get.find();
-    final NavigationController navigationController =
-        Get.find(); // Get the navigation controller
-    var height = MediaQuery.of(context).size.height;
+    final NavigationController navigationController = Get.find();
+    final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -75,9 +75,7 @@ class SavedScreen extends StatelessWidget {
                 const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
-                    // Change the navigation index instead of using Get.to
-                    navigationController.selectedIndex.value =
-                        1; // Assuming 1 is the index for AllTopicsScreen
+                    navigationController.selectedIndex.value = 1;
                   },
                   child: const Text(
                     'Browse Topics',
@@ -121,7 +119,9 @@ class SavedScreen extends StatelessWidget {
                 ),
                 onTap: () {
                   if (topic['screen'] != null) {
-                    Get.to(() => topic['screen']);
+                    Get.to(() => topic['screen'] as Widget);
+                  } else {
+                    Get.to(() => AllTopicsScreen());
                   }
                 },
               ),

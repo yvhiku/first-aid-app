@@ -14,6 +14,7 @@ class AllergicReactions extends StatelessWidget {
       'title': 'Allergic Reactions',
       'image': tDustimg,
       'screen': const AllergicReactions(),
+      'type': 'AllergicReactions',
     };
 
     return Scaffold(
