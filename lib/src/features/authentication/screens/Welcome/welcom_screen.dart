@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/constants/colors.dart';
 import 'package:flutter_application_1/src/constants/image_strings.dart';
 import 'package:flutter_application_1/src/constants/sizes.dart';
 import 'package:flutter_application_1/src/constants/text_strings.dart';
-import 'package:flutter_application_1/src/features/authentication/screens/SignUP/signup_screen.dart';
+import 'package:flutter_application_1/src/features/authentication/provider/auth_provider.dart';
 import 'package:flutter_application_1/src/features/authentication/screens/login/login_screen.dart';
-import 'package:get/get.dart';
+import 'package:flutter_application_1/src/features/core/controllers/navbar.dart';
+import 'package:flutter_application_1/src/features/core/screens/home/home_page.dart';
+import 'package:provider/provider.dart';
 
-class WelcomScreen extends StatelessWidget {
-  const WelcomScreen({super.key});
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key});
 
   @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider1>(context, listen: false);
+
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -40,23 +50,38 @@ class WelcomScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () => Get.to(() => const LoginScreen()),
-                    child: Text(tLogin.toUpperCase()),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.all(Radius.circular(20)),
                   ),
+                  foregroundColor: tWhiteColor,
+                  backgroundColor: tPrimaryColor,
+                  side: BorderSide(color: tSecondaryColor),
+                  padding: EdgeInsets.symmetric(vertical: tButtonHeight),
                 ),
-                SizedBox(width: 10.0),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () => Get.to(() => const SignupScreen()),
-                    child: Text(tSignUP.toUpperCase()),
-                  ),
-                ),
-              ],
+                onPressed: () {
+                  if (ap.isSignedIn == true) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const NavBar()),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  }
+                },
+                child: Text(tLogin.toUpperCase()),
+              ),
             ),
+            SizedBox(width: 10.0),
           ],
         ),
       ),

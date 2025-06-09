@@ -4,8 +4,8 @@ const String tWelcomeSubTitle =
 const String tLogin = " Login";
 const String tSignUP = " Sign Up";
 
-const String tLoginTitle = "Welcome Back,";
-const String tLoginSubTitle = "Seconds matter. Be ready.";
+const String tLoginTitle = "Register Now!,";
+const String tLoginSubTitle = "Seconds Save Lives, Be Prepared";
 const String tRememberMe = "Remember Me?";
 const String tAlreadyHaveAnAccount = "Already have an Account?";
 const String tDontHaveAnAccount = "Don't have an Account? ";
