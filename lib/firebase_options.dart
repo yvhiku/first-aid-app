@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC6RZIXthRqUOSW2iIqKL9Pns-lgZNGmNc',
+    apiKey: 'YOUR_API_KEY',
     appId: '1:981122937319:android:5b35c16bb1e7fe31878d42',
     messagingSenderId: '981122937319',
     projectId: 'first-aid-app-v1',
